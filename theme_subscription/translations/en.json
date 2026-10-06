@@ -1,0 +1,17 @@
+{
+  "common.billingPeriods.month": "month",
+  "common.billingPeriods.week": "week",
+  "common.billingPeriods.year": "year",
+  "common.search": "Search",
+  "common.view": "View",
+  "plans.mostPopular": "Most Popular",
+  "plans.noPlans": "No plans available at this time.",
+  "plans.selectPlan": "Select Plan",
+  "plans.sortByPrice": "Sort by price",
+  "plans.subtitle": "Choose the plan that fits you best",
+  "plans.tableHeaders.actions": "Actions",
+  "plans.tableHeaders.billingPeriod": "Billing",
+  "plans.tableHeaders.name": "Name",
+  "plans.tableHeaders.price": "Price",
+  "plans.title": "Select a Plan"
+}

@@ -1,0 +1,15 @@
+{
+  "common.billingPeriods.month": "月",
+  "common.billingPeriods.week": "周",
+  "common.billingPeriods.year": "年",
+  "common.view": "查看",
+  "plans.mostPopular": "最受欢迎",
+  "plans.noPlans": "目前没有可用的计划。",
+  "plans.selectPlan": "选择方案",
+  "plans.subtitle": "选择最适合您的方案",
+  "plans.tableHeaders.actions": "操作",
+  "plans.tableHeaders.billingPeriod": "计费",
+  "plans.tableHeaders.name": "名称",
+  "plans.tableHeaders.price": "价格",
+  "plans.title": "选择计划"
+}

@@ -1,0 +1,20 @@
+{#- PlanCheckoutSummary.vue — the subscription source's order summary (nothing without a
+    plan, as the SPA's v-if). A plan loaded from ?tarif_plan_id is written back into the
+    fe-core cart, as loadPlan does. -#}
+{%- from "checkout/_price_display.html.j2" import price_display -%}
+{%- if summary.cart_write is not none %}<script type="application/json" data-vbwd-cart-write="vbwd_cart">{{ summary.cart_write|tojson }}</script>{% endif -%}
+{%- set plan = summary.plan -%}
+{%- if plan -%}
+<div class="plan-details">
+  <div class="plan-row"><span data-testid="plan-name">{{ plan.name }}</span><span data-testid="plan-price">{{ price_display(plan.price) }}/{{ _(plan.billing_period_key) if plan.billing_period_key else plan.billing_period_text }}</span></div>
+  {%- if plan.description %}
+  <p class="plan-description">{{ plan.description }}</p>
+  {%- endif %}
+  {%- for bundle in summary.bundles %}
+  <div class="plan-row addon-row" data-testid="summary-token-bundle"><span>{{ bundle.name }}</span><span>{{ bundle.price_label }}</span></div>
+  {%- endfor %}
+  {%- for addon in summary.addons %}
+  <div class="plan-row addon-row" data-testid="summary-add-on"><span>{{ addon.name }}</span><span>{{ addon.price_label }}</span></div>
+  {%- endfor %}
+</div>
+{%- endif -%}

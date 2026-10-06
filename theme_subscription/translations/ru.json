@@ -1,0 +1,15 @@
+{
+  "common.billingPeriods.month": "месяц",
+  "common.billingPeriods.week": "неделя",
+  "common.billingPeriods.year": "год",
+  "common.view": "Просмотр",
+  "plans.mostPopular": "Самый Популярный",
+  "plans.noPlans": "На данный момент тарифы недоступны.",
+  "plans.selectPlan": "Выбрать план",
+  "plans.subtitle": "Выберите тариф, который подходит именно вам",
+  "plans.tableHeaders.actions": "Действия",
+  "plans.tableHeaders.billingPeriod": "Биллинг",
+  "plans.tableHeaders.name": "Название",
+  "plans.tableHeaders.price": "Цена",
+  "plans.title": "Выберите Тариф"
+}

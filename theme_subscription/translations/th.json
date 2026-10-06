@@ -1,0 +1,15 @@
+{
+  "common.billingPeriods.month": "เดือน",
+  "common.billingPeriods.week": "สัปดาห์",
+  "common.billingPeriods.year": "ปี",
+  "common.view": "ดู",
+  "plans.mostPopular": "ได้รับความนิยมมากที่สุด",
+  "plans.noPlans": "ไม่มีแผนที่ใช้งานได้ในขณะนี้",
+  "plans.selectPlan": "เลือกแผน",
+  "plans.subtitle": "เลือกแผนที่เหมาะกับคุณที่สุด",
+  "plans.tableHeaders.actions": "การดำเนินการ",
+  "plans.tableHeaders.billingPeriod": "การเรียกเก็บ",
+  "plans.tableHeaders.name": "ชื่อ",
+  "plans.tableHeaders.price": "ราคา",
+  "plans.title": "เลือกแผน"
+}

@@ -1,0 +1,15 @@
+{
+  "common.billingPeriods.month": "月",
+  "common.billingPeriods.week": "週",
+  "common.billingPeriods.year": "年",
+  "common.view": "表示",
+  "plans.mostPopular": "最も人気",
+  "plans.noPlans": "現在、利用可能なプランはありません。",
+  "plans.selectPlan": "プランを選択",
+  "plans.subtitle": "あなたに最適なプランをお選びください",
+  "plans.tableHeaders.actions": "操作",
+  "plans.tableHeaders.billingPeriod": "請求",
+  "plans.tableHeaders.name": "名前",
+  "plans.tableHeaders.price": "価格",
+  "plans.title": "プランを選択"
+}

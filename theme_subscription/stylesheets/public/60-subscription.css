@@ -1,0 +1,220 @@
+/* theme_subscription (S152-08) — CSS ported from fe-user: plugins/subscription
+   TariffPlanCollection.vue, PlanCheckoutSummary.vue and the core
+   CollectionToolbar.vue. Structural only; every colour is the SPA's own
+   var(--…, fallback) chain. The literal colours the SPA hard-codes — the palette
+   presets (.tariff-plan-collection--light, --dark, --teal, --indigo, --emerald),
+   the featured-card and badge shadows, the active view button shadow and the
+   summary description grey — are the fallbacks of --vbwd-subscription-* tokens
+   (S152-06d): the SPA look by default, overridable by a child theme's
+   tokens.json or a CMS style. The SPA's literal `#fff` text on the
+   primary buttons / badge uses the SPA's text-on-primary token
+   var(--vbwd-color-on-primary, #fff) — the same rendering by default.
+   Theme-only: .tariff-plan-card--current (the viewer's plan, S152-08). */
+
+/* TariffPlanCollection.vue */
+.tariff-plan-collection {
+  --tpc-primary: var(--vbwd-color-primary, #3498db);
+  --tpc-primary-hover: var(--vbwd-color-primary-hover, #2980b9);
+  --tpc-card-bg: var(--vbwd-card-bg, #fff);
+  --tpc-text-heading: var(--vbwd-text-heading, #2c3e50);
+  --tpc-text-muted: var(--vbwd-text-muted, #666);
+  --tpc-border: var(--vbwd-border-light, #f0f0f0);
+  --tpc-check: var(--tpc-primary);
+  --tpc-card-shadow: var(--vbwd-card-shadow, 0 2px 5px rgba(0, 0, 0, 0.05));
+  --tpc-page-bg: var(--vbwd-page-bg, #f8f9fa);
+}
+/* Palette presets: each role is a --vbwd-subscription-plan-collection-<preset>-<role>
+   token whose fallback is the SPA preset's literal. */
+.tariff-plan-collection--light {
+  --tpc-card-bg: var(--vbwd-subscription-plan-collection-light-card-bg, #ffffff);
+  --tpc-text-heading: var(--vbwd-subscription-plan-collection-light-text-heading, #1f2937);
+  --tpc-text-muted: var(--vbwd-subscription-plan-collection-light-text-muted, #6b7280);
+  --tpc-border: var(--vbwd-subscription-plan-collection-light-border, #e5e7eb);
+}
+.tariff-plan-collection--dark {
+  --tpc-primary: var(--vbwd-subscription-plan-collection-dark-primary, #3b82f6);
+  --tpc-primary-hover: var(--vbwd-subscription-plan-collection-dark-primary-hover, #2563eb);
+  --tpc-card-bg: var(--vbwd-subscription-plan-collection-dark-card-bg, #1f2937);
+  --tpc-text-heading: var(--vbwd-subscription-plan-collection-dark-text-heading, #f9fafb);
+  --tpc-text-muted: var(--vbwd-subscription-plan-collection-dark-text-muted, #9ca3af);
+  --tpc-border: var(--vbwd-subscription-plan-collection-dark-border, #374151);
+  --tpc-page-bg: var(--vbwd-subscription-plan-collection-dark-page-bg, #111827);
+  --tpc-card-shadow: 0 2px 14px var(--vbwd-subscription-plan-collection-dark-card-shadow, rgba(0, 0, 0, 0.5));
+}
+.tariff-plan-collection--teal {
+  --tpc-primary: var(--vbwd-subscription-plan-collection-teal-primary, #14b8a6);
+  --tpc-primary-hover: var(--vbwd-subscription-plan-collection-teal-primary-hover, #0d9488);
+  --tpc-check: var(--vbwd-subscription-plan-collection-teal-check, #14b8a6);
+}
+.tariff-plan-collection--indigo {
+  --tpc-primary: var(--vbwd-subscription-plan-collection-indigo-primary, #6366f1);
+  --tpc-primary-hover: var(--vbwd-subscription-plan-collection-indigo-primary-hover, #4f46e5);
+  --tpc-check: var(--vbwd-subscription-plan-collection-indigo-check, #6366f1);
+}
+.tariff-plan-collection--emerald {
+  --tpc-primary: var(--vbwd-subscription-plan-collection-emerald-primary, #10b981);
+  --tpc-primary-hover: var(--vbwd-subscription-plan-collection-emerald-primary-hover, #059669);
+  --tpc-check: var(--vbwd-subscription-plan-collection-emerald-check, #10b981);
+}
+.tariff-plan-collection__header { text-align: center; margin-bottom: 24px; }
+.tariff-plan-collection__heading { color: var(--tpc-text-heading); margin-bottom: 8px; }
+.tariff-plan-collection__subtitle { color: var(--tpc-text-muted); font-size: 1.05rem; margin: 0; }
+.tariff-plan-collection__state { text-align: center; padding: 40px 20px; color: var(--tpc-text-muted); }
+.tariff-plan-collection__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+.tariff-plan-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--tpc-card-bg);
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: var(--tpc-card-shadow);
+  border: 2px solid transparent;
+  text-align: center;
+  transition: all 0.2s;
+}
+.tariff-plan-card:hover { transform: translateY(-4px); border-color: var(--tpc-primary); }
+.tariff-plan-card--featured {
+  border-color: var(--tpc-primary);
+  box-shadow: 0 16px 40px var(--vbwd-subscription-plan-card-featured-shadow, rgba(0, 0, 0, 0.16));
+  z-index: 1;
+}
+@media (min-width: 900px) {
+  .tariff-plan-card--featured { transform: scale(1.04); }
+  .tariff-plan-card--featured:hover { transform: scale(1.04) translateY(-4px); }
+}
+.tariff-plan-card--current { border-color: var(--tpc-primary); }
+.tariff-plan-card__badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--tpc-primary);
+  color: var(--vbwd-color-on-primary, #fff);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px var(--vbwd-subscription-plan-badge-shadow, rgba(0, 0, 0, 0.18));
+  white-space: nowrap;
+}
+.tariff-plan-card__image { display: block; width: 72px; height: 72px; object-fit: contain; margin: 4px auto 16px; }
+.tariff-plan-card h3 { color: var(--tpc-text-heading); margin-bottom: 12px; }
+.tariff-plan-card__price { margin-bottom: 14px; font-size: 1.6rem; font-weight: 700; color: var(--tpc-text-heading); }
+.tariff-plan-card__period { font-size: 0.9rem; font-weight: 400; color: var(--tpc-text-muted); }
+.tariff-plan-card__description { color: var(--tpc-text-muted); font-size: 0.9rem; margin-bottom: 16px; }
+.tariff-plan-card__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tariff-plan-card__feature { display: flex; align-items: center; gap: 10px; color: var(--tpc-text-muted); font-size: 0.95rem; }
+.tariff-plan-card__check { flex-shrink: 0; width: 18px; height: 18px; color: var(--tpc-check); }
+.tariff-plan-card__select,
+.tariff-plan-collection__select-sm {
+  padding: 10px 16px;
+  background-color: var(--tpc-primary);
+  color: var(--vbwd-color-on-primary, #fff);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+.tariff-plan-card__select:hover,
+.tariff-plan-collection__select-sm:hover { background-color: var(--tpc-primary-hover); }
+.tariff-plan-card__select { width: 100%; margin-top: auto; }
+.tariff-plan-card--featured .tariff-plan-card__select {
+  background-image: linear-gradient(135deg, var(--tpc-primary), var(--tpc-primary-hover));
+}
+.tariff-plan-collection__table-wrapper { overflow-x: auto; }
+.tariff-plan-collection__table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--tpc-card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--tpc-card-shadow);
+}
+.tariff-plan-collection__table th {
+  background: var(--tpc-page-bg);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--tpc-text-muted);
+}
+.tariff-plan-collection__table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--tpc-border);
+  color: var(--tpc-text-heading);
+}
+.tariff-plan-collection [hidden] { display: none; }
+
+/* CollectionToolbar.vue */
+.collection-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.collection-toolbar__search {
+  flex: 1 1 220px;
+  min-width: 180px;
+  padding: 8px 12px;
+  border: 1px solid var(--vbwd-border-color, #ddd);
+  background: var(--vbwd-card-bg, #fff);
+  color: var(--vbwd-text-body, #333);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+.collection-toolbar__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--vbwd-border-color, #ddd);
+  background: var(--vbwd-card-bg, #fff);
+  color: var(--vbwd-text-body, #333);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.collection-toolbar__views {
+  display: flex;
+  gap: 4px;
+  background: var(--vbwd-page-bg, #f8f9fa);
+  border: 1px solid var(--vbwd-border-color, #ddd);
+  border-radius: 6px;
+  padding: 3px;
+}
+.collection-toolbar__view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--vbwd-text-muted, #6b7280);
+}
+.collection-toolbar__view-btn.active {
+  background: var(--vbwd-card-bg, #fff);
+  color: var(--vbwd-text-heading, #2c3e50);
+  box-shadow: 0 1px 3px var(--vbwd-subscription-toolbar-view-active-shadow, rgba(0, 0, 0, 0.1));
+}
+
+/* PlanCheckoutSummary.vue */
+.plan-details { margin-bottom: 8px; }
+.plan-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.plan-description { font-size: 0.9rem; margin: 4px 0 0; }
+/* Scoped to the summary's .plan-details (the SPA scopes the component) so the
+   colour does not reach another adapter's .plan-description in the shared theme.css. */
+.plan-details .plan-description { color: var(--vbwd-subscription-summary-description-text, #6b7280); }

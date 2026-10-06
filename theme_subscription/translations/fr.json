@@ -1,0 +1,15 @@
+{
+  "common.billingPeriods.month": "mois",
+  "common.billingPeriods.week": "semaine",
+  "common.billingPeriods.year": "année",
+  "common.view": "Afficher",
+  "plans.mostPopular": "Populaire",
+  "plans.noPlans": "Aucun plan disponible pour le moment.",
+  "plans.selectPlan": "Choisir le plan",
+  "plans.subtitle": "Choisissez le forfait qui vous convient le mieux",
+  "plans.tableHeaders.actions": "Actions",
+  "plans.tableHeaders.billingPeriod": "Facturation",
+  "plans.tableHeaders.name": "Nom",
+  "plans.tableHeaders.price": "Prix",
+  "plans.title": "Sélectionner un Plan"
+}

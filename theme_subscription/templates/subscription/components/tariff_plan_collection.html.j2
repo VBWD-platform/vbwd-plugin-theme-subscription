@@ -1,0 +1,72 @@
+{#- The TariffPlanCollection CMS widget — TariffPlanCollection.vue + CollectionToolbar.vue.
+    The plans are a personalised region: a viewer re-render marks the current plan. -#}
+{%- from "checkout/_price_display.html.j2" import price_display -%}
+{%- set collection = component_context -%}
+{%- macro period_label(plan) -%}{{ _(plan.billing_period_key) if plan.billing_period_key else plan.billing_period_text }}{%- endmacro -%}
+{%- macro select_button(plan, select_class) -%}
+<button type="submit" class="{{ select_class }}" data-testid="select-plan-{{ plan.slug }}" form="{{ collection.form_id }}" formaction="{{ plan.select_action }}"{% if collection.select_parameter %} name="{{ collection.select_parameter }}" value="{{ plan.slug }}"{% endif %}>{{ collection.cta_label or _('plans.selectPlan') }}</button>
+{%- endmacro -%}
+<div class="tariff-plan-collection tariff-plan-collection--{{ collection.theme }}" data-sort-direction="asc">
+  {%- if collection.css %}<style>{{ collection.css }}</style>{% endif %}
+  <div class="tariff-plan-collection__header">
+    <h2 class="tariff-plan-collection__heading" data-testid="tariff-plan-collection-heading">{{ collection.heading or _('plans.title') }}</h2>
+    <p class="tariff-plan-collection__subtitle" data-testid="tariff-plan-collection-subtitle">{{ collection.subtitle or _('plans.subtitle') }}</p>
+  </div>
+  {%- if collection.state == 'error' %}
+  <div class="tariff-plan-collection__state" data-testid="tariff-plan-error">
+    <p>{{ collection.error }}</p>
+  </div>
+  {%- elif collection.state == 'empty' %}
+  <div class="tariff-plan-collection__state" data-testid="tariff-plan-empty">
+    <p>{{ _('plans.noPlans') }}</p>
+  </div>
+  {%- else %}
+  <form id="{{ collection.form_id }}" method="get" action="/checkout" hidden></form>
+  <div class="collection-toolbar">
+    <input type="search" class="collection-toolbar__search" data-testid="collection-search" placeholder="{{ _('common.search') }}">
+    <button type="button" class="collection-toolbar__sort" data-testid="collection-sort-toggle">{{ _('plans.sortByPrice') }} <span aria-hidden="true" data-vbwd-sort-arrow>↑</span></button>
+    <div class="collection-toolbar__views">
+      <button type="button" class="collection-toolbar__view-btn{% if collection.view == 'cards' %} active{% endif %}" data-testid="collection-view-cards" aria-label="{{ _('common.view') }}"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="0" width="7" height="7"/><rect x="9" y="0" width="7" height="7"/><rect x="0" y="9" width="7" height="7"/><rect x="9" y="9" width="7" height="7"/></svg></button>
+      <button type="button" class="collection-toolbar__view-btn{% if collection.view != 'cards' %} active{% endif %}" data-testid="collection-view-table" aria-label="{{ _('common.view') }}"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="1" width="16" height="2"/><rect x="0" y="6" width="16" height="2"/><rect x="0" y="11" width="16" height="2"/></svg></button>
+    </div>
+  </div>
+  {% region %}
+  <div class="tariff-plan-collection__grid" data-testid="tariff-plan-grid" data-vbwd-plan-list{% if collection.view != 'cards' %} hidden{% endif %}>
+    {%- for plan in collection.plans %}
+    <div class="tariff-plan-card{% if plan.is_featured %} tariff-plan-card--featured{% endif %}{% if plan.slug == collection.current_plan_slug %} tariff-plan-card--current{% endif %}" data-testid="tariff-plan-card-{{ plan.slug }}" data-vbwd-plan="{{ plan.slug }}" data-search-text="{{ plan.search_text }}" data-sort-key="{{ plan.sort_key }}">
+      {%- if plan.is_featured %}
+      <div class="tariff-plan-card__badge" data-testid="tariff-plan-badge">{{ collection.badge or _('plans.mostPopular') }}</div>
+      {%- endif %}
+      {%- if collection.image_url %}
+      <img class="tariff-plan-card__image" data-testid="tariff-plan-image" src="{{ collection.image_url }}" alt="{{ plan.name }}">
+      {%- endif %}
+      <h3>{{ plan.name }}</h3>
+      <div class="tariff-plan-card__price">{{ price_display(plan.price) }}<span class="tariff-plan-card__period">/{{ period_label(plan) }}</span></div>
+      {%- if plan.description %}
+      <p class="tariff-plan-card__description">{{ plan.description }}</p>
+      {%- endif %}
+      {%- if collection.features %}
+      <ul class="tariff-plan-card__features" data-testid="tariff-plan-features">
+        {%- for feature in collection.features %}
+        <li class="tariff-plan-card__feature"><svg class="tariff-plan-card__check" viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 13.5 4 10l-1.2 1.2L7.5 16 17 6.5 15.8 5.3z" fill="currentColor"/></svg><span>{{ feature }}</span></li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+      {% with select_class = "tariff-plan-card__select" %}{{ select_button(plan, select_class) }}{% endwith %}
+    </div>
+    {%- endfor %}
+  </div>
+  <div class="tariff-plan-collection__table-wrapper"{% if collection.view == 'cards' %} hidden{% endif %}>
+    <table class="tariff-plan-collection__table" data-testid="tariff-plan-table">
+      <thead><tr><th>{{ _('plans.tableHeaders.name') }}</th><th>{{ _('plans.tableHeaders.price') }}</th><th>{{ _('plans.tableHeaders.billingPeriod') }}</th><th>{{ _('plans.tableHeaders.actions') }}</th></tr></thead>
+      <tbody data-vbwd-plan-list>
+        {%- for plan in collection.plans %}
+        <tr data-testid="tariff-plan-row-{{ plan.slug }}" data-vbwd-plan="{{ plan.slug }}" data-search-text="{{ plan.search_text }}" data-sort-key="{{ plan.sort_key }}"><td>{{ plan.name }}</td><td>{{ price_display(plan.price) }}</td><td>{{ period_label(plan) }}</td><td>{% with select_class = "tariff-plan-collection__select-sm" %}{{ select_button(plan, select_class) }}{% endwith %}</td></tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endregion %}
+  {%- endif %}
+</div>
+<script>{% include "subscription/partials/tariff_plan_collection_runtime.js" %}</script>
